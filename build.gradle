@@ -42,7 +42,8 @@ dependencies {
 
 jar {
     manifest {
-        attributes 'FMLCorePlugin': 'elec332.core.asm.CoreLoaderClass'
+        attributes  'FMLCorePlugin': 'elec332.core.asm.CoreLoaderClass',
+                    'ModSide': 'CLIENT'
     }
 }
 

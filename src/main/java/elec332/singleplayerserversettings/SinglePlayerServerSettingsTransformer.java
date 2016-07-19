@@ -10,6 +10,7 @@ import org.objectweb.asm.tree.*;
 /**
  * Created by Elec332 on 18-7-2016.
  */
+@SuppressWarnings("unused")
 public class SinglePlayerServerSettingsTransformer implements IClassTransformer {
 
     @Override
@@ -51,6 +52,10 @@ public class SinglePlayerServerSettingsTransformer implements IClassTransformer 
 
     private boolean isPortMethod(MethodNode mn){
         return mn.desc.equals("()I") && mn.exceptions.size() == 1 && mn.exceptions.get(0).equals("java/io/IOException") && mn.parameters == null;
+    }
+
+    public static int getPort(){
+        return SinglePlayerServerSettingsConfig.INSTANCE.getPort();
     }
 
 }
