@@ -50,7 +50,7 @@ jar {
 processResources
 {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", (config.mod_version+"."+(System.env.DRONE_BUILD_NUMBER ?: "9999.custom"))
+    inputs.property "version", (project.version+"."+(System.env.DRONE_BUILD_NUMBER ?: "9999.custom"))
     inputs.property "mcversion", project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
