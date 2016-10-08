@@ -35,7 +35,7 @@ public enum SinglePlayerServerSettingsConfig {
         if (this.configuration.hasChanged()){
             this.configuration.save();
         }
-        return this.port == oldPort;
+        return this.port != oldPort;
     }
 
     public boolean onlineMode(){
