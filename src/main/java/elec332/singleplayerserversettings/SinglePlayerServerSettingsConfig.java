@@ -22,13 +22,14 @@ public enum SinglePlayerServerSettingsConfig {
     private final Configuration configuration;
     private static final String onlineMode_desc, port_desc, motd_desc;
     private static final int VANILLA_DEFAULT_PORT;
-    private boolean onlineMode;
+    private boolean onlineMode, allowPvp;
     private int port;
     private String motd;
 
     public boolean loadConfig(){
         this.configuration.load();
         this.onlineMode = this.configuration.getBoolean("Online-Mode", Configuration.CATEGORY_CLIENT, onlineMode, onlineMode_desc);
+        this.allowPvp = this.configuration.getBoolean("Allow-PvP", Configuration.CATEGORY_CLIENT, allowPvp, allowPvp_desc);
         int oldPort = this.port;
         this.port = this.configuration.getInt("Port", Configuration.CATEGORY_CLIENT, VANILLA_DEFAULT_PORT, -1, 65535, port_desc);
         this.motd = this.configuration.getString("MOTD", Configuration.CATEGORY_CLIENT, "%p - %w", motd_desc);
@@ -40,6 +41,10 @@ public enum SinglePlayerServerSettingsConfig {
 
     public boolean onlineMode(){
         return onlineMode;
+    }
+
+    public boolean allowPvp(){
+        return allowPvp;
     }
 
     public int getPort(){
@@ -78,6 +83,7 @@ public enum SinglePlayerServerSettingsConfig {
     static {
         VANILLA_DEFAULT_PORT = 25565;
         onlineMode_desc = "When set to false, the LAN world will also allow connections from offline clients. This allows you to LAN a world without an active internet connection.";
+        allowPvp_desc = "Controls the PvP on the LAN worlds.";
         port_desc = "Allows you to set a port your LAN world will always use, set to -1 to use vanilla's random port assignment. When \""+VANILLA_DEFAULT_PORT+"\" is used, the players do not need to enter a port (MC-default).";
         motd_desc = "The MOTD of the LAN server, %p = player %w = world name";
     }
