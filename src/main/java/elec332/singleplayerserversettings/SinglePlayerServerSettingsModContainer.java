@@ -78,6 +78,7 @@ public class SinglePlayerServerSettingsModContainer extends DummyModContainer {
     private void setServerSettings(MinecraftServer server){
         server.setOnlineMode(SinglePlayerServerSettingsConfig.INSTANCE.onlineMode());
         server.setMOTD(SinglePlayerServerSettingsConfig.INSTANCE.getServerMOTD(server));
+        server.setAllowPvp(SinglePlayerServerSettingsConfig.INSTANCE.allowPvp());
     }
 
 }
