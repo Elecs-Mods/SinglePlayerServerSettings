@@ -20,7 +20,7 @@ public enum SinglePlayerServerSettingsConfig {
     }
 
     private final Configuration configuration;
-    private static final String onlineMode_desc, port_desc, motd_desc;
+    private static final String onlineMode_desc, port_desc, motd_desc, allowPvp_desc;
     private static final int VANILLA_DEFAULT_PORT;
     private boolean onlineMode, allowPvp;
     private int port;
