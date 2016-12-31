@@ -59,7 +59,7 @@ public enum SinglePlayerServerSettingsConfig {
     }
 
     public String getServerMOTD(MinecraftServer server){
-        return motd.replace("%p", server.getServerOwner()).replace("%w", server.worldServers[0].getWorldInfo().getWorldName());
+        return motd.replace("%p", server.getServerOwner()).replace("%w", server.getEntityWorld().getWorldInfo().getWorldName());
     }
 
     private int vanillaRandomPort() throws IOException {
