@@ -1,9 +1,0 @@
-[
-{
-  "modid": "singleplayerserversettings",
-  "name": "Example Mod",
-  "description": "Allows for playing LAN worlds without an active internet connection.",
-  "version": "${version}",
-  "authorList": ["Elec332"]
-}
-]

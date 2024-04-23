@@ -1,0 +1,15 @@
+plugins {
+    id "org.gradle.toolchains.foojay-resolver-convention" version "0.8.0"
+    id "nl.elec332.gradle.minecraft.moddev" version "1.1.0"
+}
+
+moddev {
+    enableForge()
+    enableNeoForge()
+    enableFabric()
+//    enableQuilt() //No point yet as Quilt loads fabric mods
+
+    superCommonMode = true
+    useBuildNumber = true
+
+}
