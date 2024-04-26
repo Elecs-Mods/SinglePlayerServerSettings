@@ -40,7 +40,7 @@ public abstract class ShareToLanScreenMixin extends Screen {
     private String motd;
 
     @Unique
-    private static final Component ONLINE_MODE = Component.literal("Offline Mode");
+    private static final Component OFFLINE_MODE = Component.literal("Offline Mode");
     @Unique
     private static final Component PVP_ALLOWED = Component.literal("PvP Allowed");
     @Unique
@@ -58,33 +58,23 @@ public abstract class ShareToLanScreenMixin extends Screen {
         this.pvpAllowed = integratedServer.isPvpAllowed();
         this.portEdit.setX(this.width / 2 + 5);
         this.portEdit.setY(170);
-        this.addRenderableWidget(CycleButton.onOffBuilder(!this.onlineMode).create(this.width / 2 + 5, 130, 150, 20, ONLINE_MODE, (cycleButton, b) -> {
-            this.onlineMode = !b;
-            integratedServer.setUsesAuthentication(onlineMode); //TODO: Fix Fabric
-        }));
-        this.addRenderableWidget(CycleButton.onOffBuilder(this.pvpAllowed).create(this.width / 2 - 155, 130, 150, 20, PVP_ALLOWED, (cycleButton, b) -> {
-            this.pvpAllowed = b;
-            integratedServer.setPvpAllowed(pvpAllowed); //TODO: Fix Fabric
-        }));
+        this.addRenderableWidget(CycleButton.onOffBuilder(!this.onlineMode).create(this.width / 2 + 5, 130, 150, 20, OFFLINE_MODE, (cycleButton, b) -> this.onlineMode = !b));
+        this.addRenderableWidget(CycleButton.onOffBuilder(this.pvpAllowed).create(this.width / 2 - 155, 130, 150, 20, PVP_ALLOWED, (cycleButton, b) -> this.pvpAllowed = b));
         EditBox motd = new EditBox(this.font, this.width / 2 - 155, 170, 150, 20, MOTD);
         motd.setValue(this.motd);
-        motd.setResponder(s -> {
-            this.motd = s;
-            integratedServer.setMotd(this.motd); //TODO: Fix Fabric
-        });
+        motd.setResponder(s -> this.motd = s);
         this.addRenderableWidget(motd);
     }
 
-    //Fabric (loom) fucks with lambda function names...
-//    @Inject(method = "lambda$init$2", at = @At(value = "TAIL"), remap = false)
-//    private void onServerStart(CallbackInfo ci) {
-//        IntegratedServer integratedServer = Objects.requireNonNull(Objects.requireNonNull(this.minecraft).getSingleplayerServer());
-//        integratedServer.setUsesAuthentication(onlineMode);
-//        integratedServer.setPvpAllowed(pvpAllowed);
-//        integratedServer.setMotd(this.motd);
-//        this.minecraft.gui.getChat().addMessage(Component.empty().append(ONLINE_MODE).append(": " + onlineMode + "    ").append(PVP_ALLOWED).append(": " + pvpAllowed));
-//        this.minecraft.gui.getChat().addMessage(Component.empty().append(MOTD).append(": " + this.motd));
-//    }
+    @Inject(method = {"lambda$init$2", "method_19851"}, at = @At(value = "TAIL"), remap = false)
+    private void onServerStart(CallbackInfo ci) {
+        IntegratedServer integratedServer = Objects.requireNonNull(Objects.requireNonNull(this.minecraft).getSingleplayerServer());
+        integratedServer.setUsesAuthentication(onlineMode);
+        integratedServer.setPvpAllowed(pvpAllowed);
+        integratedServer.setMotd(this.motd);
+        this.minecraft.gui.getChat().addMessage(Component.empty().append(OFFLINE_MODE).append(": " + !onlineMode + "    ").append(PVP_ALLOWED).append(": " + pvpAllowed));
+        this.minecraft.gui.getChat().addMessage(Component.empty().append(MOTD).append(": " + this.motd));
+    }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawCenteredString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V", ordinal = 1, shift = At.Shift.AFTER), cancellable = true)
     private void render(GuiGraphics guiGraphics, int $$1, int $$2, float $$3, CallbackInfo ci) {

@@ -1,6 +1,6 @@
 plugins {
     id "org.gradle.toolchains.foojay-resolver-convention" version "0.8.0"
-    id "nl.elec332.gradle.minecraft.moddev" version "1.1.0"
+    id "nl.elec332.gradle.minecraft.moddev" version "1.1.1"
 }
 
 moddev {
@@ -11,5 +11,6 @@ moddev {
 
     superCommonMode = true
     useBuildNumber = true
+    allJarOnly = true
 
 }
